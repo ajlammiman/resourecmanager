@@ -7,24 +7,30 @@ export default class Dashboard extends React.Component {
         this.state = {
             docs : [
             {
-                key : 1,
+                id : 1,
                 docTitle : 'document 1',
                 docLink : 'http://www.google.co.uk'
             },
             {
-                key : 2,
+                id : 2,
                 docTitle : 'document 2',
                 docLink : 'http://www.google.co.uk'
             },
             {
-                key : 3,
+                id : 3,
                 docTitle : 'document 3',
                 docLink : 'http://www.google.co.uk'
             }
             ]
         }
+        this.removeSelected = this.removeSelected.bind(this);
     }
-    
+
+    removeSelected()
+    {
+        alert('foo');
+    } 
+
     render()
     {
         return(
@@ -32,15 +38,28 @@ export default class Dashboard extends React.Component {
             <h2>Document Dashboard</h2>
             <ul>
                 {this.state.docs.map(function(doc, index){
-                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} />;
+                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} />;
                   })}
             </ul>
+            <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
         </div>)
     }
 };
 
 const DocumentItem = (props) => {
     return(
-        <li><a href="{props.DocLink}">{props.DocTitle}</a></li>
+        <li><a href="{props.DocLink}">{props.DocTitle}</a> <CheckBox key="props.key" /></li>
     )
  };
+ 
+const CheckBox = (props) => {
+    return(
+        <input type="checkbox" key="props.id"/>
+    )
+}
+
+const Button = (props) => {
+    return(
+        <button className="props.className" onClick={props.clickHandler}>{props.text}</button> 
+    )
+};
