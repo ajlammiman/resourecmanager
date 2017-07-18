@@ -26,9 +26,20 @@ export default class Dashboard extends React.Component {
         this.removeSelected = this.removeSelected.bind(this);
     }
 
-    removeSelected()
+    removeSelected = () =>
     {
-        alert('foo');
+        
+        var removeIndex = this.state.docs.map(function(doc){return doc.id}).indexOf(3);
+        var docList = this.state.docs;
+
+        if (removeIndex != -1)
+        {
+            docList.splice(removeIndex,1);
+        }
+        
+        this.setState({
+            docs: docList
+        });
     } 
 
     render()
