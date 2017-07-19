@@ -21,9 +21,11 @@ export default class Dashboard extends React.Component {
                 docTitle : 'document 3',
                 docLink : 'http://www.google.co.uk'
             }
-            ]
+            ],
+            selectedIds: []
         }
         this.removeSelected = this.removeSelected.bind(this);
+        this.recordSelected = this.recordSelected.bind(this);
     }
 
     removeSelected = () =>
@@ -42,6 +44,13 @@ export default class Dashboard extends React.Component {
         });
     } 
 
+    recordSelected = (id) =>
+    {
+        console.log('id');
+        //this.state.selectedIds.push(id);
+        //console.log(this.state.selectedIds);
+    }
+
     render()
     {
         return(
@@ -49,7 +58,7 @@ export default class Dashboard extends React.Component {
             <h2>Document Dashboard</h2>
             <ul>
                 {this.state.docs.map(function(doc, index){
-                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} />;
+                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} clickHandler={() => this.recordSelected(doc.id)} />;
                   })}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
@@ -59,15 +68,11 @@ export default class Dashboard extends React.Component {
 
 const DocumentItem = (props) => {
     return(
-        <li><a href="{props.DocLink}">{props.DocTitle}</a> <CheckBox key="props.key" /></li>
+        <li><a href="{props.DocLink}">{props.DocTitle}</a> <input type="checkbox" key="props.id" onClick={props.clickHandler} /></li>
     )
  };
  
-const CheckBox = (props) => {
-    return(
-        <input type="checkbox" key="props.id"/>
-    )
-}
+
 
 const Button = (props) => {
     return(
