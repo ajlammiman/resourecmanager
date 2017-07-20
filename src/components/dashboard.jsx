@@ -24,8 +24,9 @@ export default class Dashboard extends React.Component {
             ],
             selectedIds: []
         }
-        this.removeSelected = this.removeSelected.bind(this);
         this.recordSelected = this.recordSelected.bind(this);
+        this.removeSelected = this.removeSelected.bind(this);
+        //console.log(recordSelected(1));
     }
 
     removeSelected = () =>
@@ -46,19 +47,22 @@ export default class Dashboard extends React.Component {
 
     recordSelected = (id) =>
     {
-        console.log('id');
+        var docList = document.getElementById("document_list");
+        
+        console.log(docList);
         //this.state.selectedIds.push(id);
         //console.log(this.state.selectedIds);
     }
 
     render()
     {
+        
         return(
         <div>
             <h2>Document Dashboard</h2>
-            <ul>
+            <ul id="document_list">
                 {this.state.docs.map(function(doc, index){
-                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} clickHandler={() => this.recordSelected(doc.id)} />;
+                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} />;
                   })}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
@@ -68,7 +72,7 @@ export default class Dashboard extends React.Component {
 
 const DocumentItem = (props) => {
     return(
-        <li><a href="{props.DocLink}">{props.DocTitle}</a> <input type="checkbox" key="props.id" onClick={props.clickHandler} /></li>
+        <li><a href={props.DocLink}>{props.DocTitle}</a> <input type="checkbox" key={props.key} value={props.key} /></li>
     )
  };
  
@@ -76,6 +80,6 @@ const DocumentItem = (props) => {
 
 const Button = (props) => {
     return(
-        <button className="props.className" onClick={props.clickHandler}>{props.text}</button> 
+        <button className={props.className} onClick={props.clickHandler}>{props.text}</button> 
     )
 };
