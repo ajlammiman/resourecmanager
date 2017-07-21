@@ -26,32 +26,45 @@ export default class Dashboard extends React.Component {
         }
         this.recordSelected = this.recordSelected.bind(this);
         this.removeSelected = this.removeSelected.bind(this);
-        //console.log(recordSelected(1));
+        this.getDocsToRemove = this.getDocsToRemove.bind(this);
     }
 
-    removeSelected = () =>
+    removeSelected = (getDocsToRemove) =>
     {
-        
-        var removeIndex = this.state.docs.map(function(doc){return doc.id}).indexOf(3);
+        var docIndexesToRemove = this.getDocsToRemove(this.state.selectedIds, this.state.docs);
         var docList = this.state.docs;
 
-        if (removeIndex != -1)
-        {
-            docList.splice(removeIndex,1);
-        }
-        
+        docIndexesToRemove.map(function(id){
+            docList.splice(id,1);
+        });
+ 
         this.setState({
             docs: docList
         });
     } 
 
+    getDocsToRemove = (currentSelectedids, docs) =>
+    {
+        var removeIndexes = [];
+
+        currentSelectedids.map(function(id){
+               var removeIndex = docs.map(function(doc){return doc.id}).indexOf(id); 
+               if (removeIndex!= -1)
+                    removeIndexes.push(removeIndex); 
+        });
+       
+        return removeIndexes;
+    }
+
     recordSelected = (id) =>
     {
-        var docList = document.getElementById("document_list");
+        var currentSelectedids = this.state.selectedIds.slice();    
+
+        currentSelectedids.push(id);
         
-        console.log(docList);
-        //this.state.selectedIds.push(id);
-        //console.log(this.state.selectedIds);
+        this.setState({
+            selectedIds : currentSelectedids    
+        });
     }
 
     render()
@@ -62,8 +75,8 @@ export default class Dashboard extends React.Component {
             <h2>Document Dashboard</h2>
             <ul id="document_list">
                 {this.state.docs.map(function(doc, index){
-                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} />;
-                  })}
+                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} clickHandler={() => this.recordSelected(doc.id)} />;
+                  }, this)}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
         </div>)
@@ -72,7 +85,7 @@ export default class Dashboard extends React.Component {
 
 const DocumentItem = (props) => {
     return(
-        <li><a href={props.DocLink}>{props.DocTitle}</a> <input type="checkbox" key={props.key} value={props.key} /></li>
+        <li><a href={props.DocLink}>{props.DocTitle}</a> <input type="checkbox" onClick={props.clickHandler} /></li>
     )
  };
  
