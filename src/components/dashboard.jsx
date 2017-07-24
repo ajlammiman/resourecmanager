@@ -9,17 +9,23 @@ export default class Dashboard extends React.Component {
             {
                 id : 1,
                 docTitle : 'document 1',
-                docLink : 'http://www.google.co.uk'
+                docLink : 'http://www.google.co.uk',
+                description: 'Description of doc 1',
+                categories: ['category 1','category 2','category 3']    
             },
             {
                 id : 2,
                 docTitle : 'document 2',
-                docLink : 'http://www.google.co.uk'
+                docLink : 'http://www.google.co.uk',
+                description: 'Description of doc 2',
+                categories: ['category 2','category 4']
             },
             {
                 id : 3,
                 docTitle : 'document 3',
-                docLink : 'http://www.google.co.uk'
+                docLink : 'http://www.google.co.uk',
+                description: 'Description of doc 3',
+                categories: ['category 1','category 3','category 4']
             }
             ],
             selectedIds: []
