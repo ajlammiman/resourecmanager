@@ -59,9 +59,21 @@ export default class Dashboard extends React.Component {
     recordSelected = (id) =>
     {
         var currentSelectedids = this.state.selectedIds.slice();    
-
-        currentSelectedids.push(id);
+        var selected = currentSelectedids.some(function (selectedId) {
+                return selectedId === id;
+        })
         
+        if (!selected)
+        {   
+            currentSelectedids.push(id);
+        }
+        else
+        {
+            var removeIndex = currentSelectedids.map(function(sId){return sId}).indexOf(id);
+            currentSelectedids.splice(removeIndex,1); 
+        }
+
+        console.log(currentSelectedids);
         this.setState({
             selectedIds : currentSelectedids    
         });
