@@ -79,7 +79,6 @@ export default class Dashboard extends React.Component {
             currentSelectedids.splice(removeIndex,1); 
         }
 
-        console.log(currentSelectedids);
         this.setState({
             selectedIds : currentSelectedids    
         });
@@ -93,7 +92,7 @@ export default class Dashboard extends React.Component {
             <h2>Document Dashboard</h2>
             <ul id="document_list">
                 {this.state.docs.map(function(doc, index){
-                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} clickHandler={() => this.recordSelected(doc.id)} />;
+                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} clickHandler={() => this.recordSelected(doc.id)} description={doc.description} categories={doc.categories} />;
                   }, this)}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
@@ -103,10 +102,40 @@ export default class Dashboard extends React.Component {
 
 const DocumentItem = (props) => {
     return(
-        <li><a href={props.DocLink}>{props.DocTitle}</a> <input type="checkbox" onClick={props.clickHandler} /></li>
+        <li>
+            <a href={props.DocLink}>{props.DocTitle}</a> <CheckBox clickHandler={props.clickHandler} />
+            <DescriptionHolder description={props.description} />
+            <CategoryList categories={props.categories} />
+        </li>
     )
  };
  
+const CheckBox = (props) => {
+    return(
+        <input type="checkbox" onClick={props.clickHandler} />
+    )
+}
+
+const DescriptionHolder = (props) => {
+    return(
+        <div>
+            {props.description}
+        </div>
+    )
+}
+
+const CategoryList = (props) => {
+    return(
+       <div>
+           <ul>
+                {props.categories.map(function(category, index){
+                    <li>{category}</li>    
+                })}
+            </ul>
+        </div>
+    )
+} 
+
 
 
 const Button = (props) => {
