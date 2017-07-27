@@ -92,7 +92,7 @@ export default class Dashboard extends React.Component {
             <h2>Document Dashboard</h2>
             <ul id="document_list">
                 {this.state.docs.map(function(doc, index){
-                    return <DocumentItem DocTitle={doc.docTitle} DocLink={doc.docLink} key={doc.id} clickHandler={() => this.recordSelected(doc.id)} description={doc.description} categories={doc.categories} />;
+                    return <DocumentItem doc={doc} key={doc.id} clickHandler={() => this.recordSelected(doc.id)}  />;
                   }, this)}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
@@ -101,11 +101,13 @@ export default class Dashboard extends React.Component {
 };
 
 const DocumentItem = (props) => {
+    var doc = props.doc;
+
     return(
         <li>
-            <a href={props.DocLink}>{props.DocTitle}</a> <CheckBox clickHandler={props.clickHandler} />
-            <DescriptionHolder description={props.description} />
-            <CategoryList categories={props.categories} />
+            <a href={doc.docLink}>{doc.docTitle}</a> <CheckBox clickHandler={props.clickHandler} />
+            <DescriptionHolder description={doc.description} />
+            <CategoryList categories={doc.categories} />
         </li>
     )
  };
@@ -129,7 +131,7 @@ const CategoryList = (props) => {
        <div>
            <ul>
                 {props.categories.map(function(category, index){
-                    <li>{category}</li>    
+                    return <li key={category}>{category}</li>;    
                 })}
             </ul>
         </div>
