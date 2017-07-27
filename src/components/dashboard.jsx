@@ -95,7 +95,7 @@ export default class Dashboard extends React.Component {
                     return <DocumentItem doc={doc} key={doc.id} clickHandler={() => this.recordSelected(doc.id)}  />;
                   }, this)}
             </ul>
-            <Button text="Remove Selected" clickHandler={this.removeSelected} className="blue-btn" />
+            <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
         </div>)
     }
 };
@@ -138,10 +138,30 @@ const CategoryList = (props) => {
     )
 } 
 
-
+const InputContainer = (props) => {
+    return(
+        <div>
+            <Input InputTitle="doc_title" DocTitle={props.docTitle} />
+            <TextBox InputTitle="doc_description" Description={props.description} />
+            <Button text="Add" clickHandler={props.clickHandler} className="add-btn" />
+        </div>
+    )
+}
 
 const Button = (props) => {
     return(
         <button className={props.className} onClick={props.clickHandler}>{props.text}</button> 
     )
 };
+
+const Input = (props) => {
+    return(
+        <input type="text" name={props.InputTitle} value={props.DocTitle}  />
+    )
+}
+
+const TextBox = (props) => {
+    return(
+        <textarea name={props.InputTitle}>{props.Description}</textarea>
+    )
+}
