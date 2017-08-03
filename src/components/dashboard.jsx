@@ -33,6 +33,7 @@ export default class Dashboard extends React.Component {
         this.recordSelected = this.recordSelected.bind(this);
         this.removeSelected = this.removeSelected.bind(this);
         this.getDocsToRemove = this.getDocsToRemove.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
     }
 
     removeSelected = (getDocsToRemove) =>
@@ -84,6 +85,13 @@ export default class Dashboard extends React.Component {
         });
     }
 
+    
+    changeHandler = (event) =>
+    {
+        console.log(event.target.value);
+        this.setState({documentDescription: event.target.value});
+    }
+
     render()
     {
         
@@ -96,6 +104,7 @@ export default class Dashboard extends React.Component {
                   }, this)}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
+            <InputContainer clickHandler={this.addNew} changeHandler={this.changeHandler}   />
         </div>)
     }
 };
@@ -141,8 +150,8 @@ const CategoryList = (props) => {
 const InputContainer = (props) => {
     return(
         <div>
-            <Input InputTitle="doc_title" DocTitle={props.docTitle} />
-            <TextBox InputTitle="doc_description" Description={props.description} />
+            <Input InputTitle="doc_title" DocTitle={props.docTitle} onChange={props.changeHandler} />
+            <TextBox InputTitle="doc_description" Description={props.description} onChange={props.changeHandler} />
             <Button text="Add" clickHandler={props.clickHandler} className="add-btn" />
         </div>
     )
