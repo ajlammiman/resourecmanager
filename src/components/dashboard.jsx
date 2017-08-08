@@ -34,6 +34,8 @@ export default class Dashboard extends React.Component {
         this.removeSelected = this.removeSelected.bind(this);
         this.getDocsToRemove = this.getDocsToRemove.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        this.changeTitleHandler = this.changeTitleHandler.bind(this);
+        this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
     }
 
     removeSelected = (getDocsToRemove) =>
@@ -88,9 +90,25 @@ export default class Dashboard extends React.Component {
     
     submitHandler = (event) =>
     {
-       //var docTitle = React.findDOMNode(this.refs.InputContainer).value;
+        //var docTitle = React.findDOMNode(this.refs.InputContainer).value;
+    
+        event.preventDefault();
+    }
 
-       alert(docTitle);
+    changeTitleHandler = (event) =>
+    {
+         console.log(event);  
+        this.setState({
+            title : event.target.value    
+        });
+    }
+
+    changeDescriptionHandler = (event) =>
+    {
+        console.log(event);  
+        this.setState({
+            description : event.target.value    
+        });  
     }
 
     render()
@@ -104,7 +122,7 @@ export default class Dashboard extends React.Component {
                   }, this)}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
-            <InputContainer submitHandler={() => this.submitHandler()}  />
+            <InputContainer submitHandler={this.submitHandler} changeTitle={this.changeTitleHandler} changeDescription={this.changeDescriptionHandler}  />
         </div>)
     }
 };
@@ -151,8 +169,8 @@ const InputContainer = (props) => {
     return(
         <div>
             <form action="" onSubmit={props.submitHandler}>
-                <Input InputTitle="doc_title" DocTitle={props.docTitle} />
-                <TextBox InputTitle="doc_description" Description={props.description} />
+                <Input InputTitle="doc_title" DocTitle={props.docTitle} onChange={props.changeTitle} />
+                <TextBox InputTitle="doc_description" Description={props.description} onChange={props.changeDescription} />
                 <Submit text="Add" className="add-btn" name="add" />
             </form>
         </div>
