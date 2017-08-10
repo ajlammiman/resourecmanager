@@ -28,13 +28,24 @@ export default class Dashboard extends React.Component {
                 categories: ['category 1','category 3','category 4']
             }
             ],
-            selectedIds: []
+            selectedIds: [],
+            newDoc :
+            {
+                id : 0,
+                docTitle : '',
+                docLink : '',
+                description: '',
+                categories: []
+            },
+            categories: ['category 1','category 2','category 3'] 
         }
         this.recordSelected = this.recordSelected.bind(this);
         this.removeSelected = this.removeSelected.bind(this);
         this.getDocsToRemove = this.getDocsToRemove.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.changeTitleHandler = this.changeTitleHandler.bind(this);
+        this.changeLinkHandler = this.changeLinkHandler.bind(this);
+        this.changeCategoryHandler = this.changeCategoryHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
     }
 
@@ -90,26 +101,82 @@ export default class Dashboard extends React.Component {
     
     submitHandler = (event) =>
     {
-        //var docTitle = React.findDOMNode(this.refs.InputContainer).value;
-    
+        var currentDocs = this.state.docs.slice();
+        var newDoc = this.state.newDoc;
+        newDoc.id = this.nextId(currentDocs); 
+        currentDocs.push(newDoc);
+        var blankDoc = this.blankDoc();
+       
+        this.setState({
+            docs : currentDocs,
+            newDoc : blankDoc
+        });
+        
         event.preventDefault();
+    }
+
+    nextId = (docs) =>
+    {
+        return ((docs.length > 0) ? docs.slice(-1)[0].id : 0) + 1;
+    } 
+
+    blankDoc = () =>
+    {
+        var newDoc = 
+        {
+            id : 0,
+            docTitle : '',
+            docLink : '',
+            description: '',
+            categories: []
+        }
+
+        return newDoc;
     }
 
     changeTitleHandler = (event) =>
     {
-         console.log(event);  
-        this.setState({
-            title : event.target.value    
-        });
+        var currentNewDoc = this.state.newDoc;
+        currentNewDoc.docTitle = event.target.value;
+
+       this.changeDocHandler(currentNewDoc);
+    }
+
+    changeLinkHandler = (event) =>
+    {
+        var currentNewDoc = this.state.newDoc;
+        currentNewDoc.docLink = event.target.value;
+
+       this.changeDocHandler(currentNewDoc);
+    }
+
+    changeCategoryHandler = (event) =>
+    {
+        var currentNewDoc = this.state.newDoc;
+        var currentCategories = currentNewDoc.categories.slice();    
+        currentCategories.push(event.target.value);
+
+        currentNewDoc.categories = currentCategories;
+
+       this.changeDocHandler(currentNewDoc);
     }
 
     changeDescriptionHandler = (event) =>
     {
-        console.log(event);  
-        this.setState({
-            description : event.target.value    
-        });  
+        var currentNewDoc = this.state.newDoc;
+        currentNewDoc.description = event.target.value;
+
+        this.changeDocHandler(currentNewDoc);
     }
+
+    changeDocHandler = (doc) =>
+    {
+        this.setState({
+            newDoc : doc    
+        });   
+    }
+
+    
 
     render()
     {
@@ -122,7 +189,20 @@ export default class Dashboard extends React.Component {
                   }, this)}
             </ul>
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
-            <InputContainer submitHandler={this.submitHandler} changeTitle={this.changeTitleHandler} changeDescription={this.changeDescriptionHandler}  />
+            <div>
+                <form action="" onSubmit={this.submitHandler}>
+                    <input type="text" onChange={this.changeTitleHandler} value={this.state.newDoc.docTitle} />
+                    <input type="text" onChange={this.changeLinkHandler} value={this.state.newDoc.docLink} />
+                    <select onChange={this.changeCategoryHandler}>
+                        <option>Select a category</option>
+                        {this.state.categories.map(function(cat, index){
+                            return <option key={cat}>{cat}</option>;
+                        }, this)}
+                    </select>
+                    <textarea onChange={this.changeDescriptionHandler} value={this.state.newDoc.description}></textarea>
+                    <input type="submit" name="add" value="add" className="submit-btn" />   
+                </form>
+            </div>  
         </div>)
     }
 };
@@ -165,39 +245,10 @@ const CategoryList = (props) => {
     )
 } 
 
-const InputContainer = (props) => {
-    return(
-        <div>
-            <form action="" onSubmit={props.submitHandler}>
-                <Input InputTitle="doc_title" DocTitle={props.docTitle} onChange={props.changeTitle} />
-                <TextBox InputTitle="doc_description" Description={props.description} onChange={props.changeDescription} />
-                <Submit text="Add" className="add-btn" name="add" />
-            </form>
-        </div>
-    )
-}
-
-
 const Button = (props) => {
     return(
         <button className={props.className} onClick={props.clickHandler}>{props.text}</button> 
     )
 };
 
-const Input = (props) => {
-    return(
-        <input type="text" name={props.InputTitle} value={props.DocTitle}  />
-    )
-}
 
-const TextBox = (props) => {
-    return(
-        <textarea name={props.InputTitle}>{props.Description}</textarea>
-    )
-}
-
-const Submit = (props) => {
-    return(
-       <input type="submit" name={props.name} value={props.text} className={props.className} />     
-    )
-}
