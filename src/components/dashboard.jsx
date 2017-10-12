@@ -92,7 +92,7 @@ export default class Dashboard extends React.Component {
             var removeIndex = currentSelectedids.map(function(sId){return sId}).indexOf(id);
             currentSelectedids.splice(removeIndex,1); 
         }
-
+        
         this.setState({
             selectedIds : currentSelectedids    
         });
@@ -186,39 +186,35 @@ export default class Dashboard extends React.Component {
             <ul id="document_list">
                 {this.state.docs.map(function(doc, index){
                     return <DocumentItem doc={doc} key={doc.id} clickHandler={() => this.recordSelected(doc.id)}  />;
-                  }, this)}
+                    }, this)}
             </ul>
+
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
-            <div>
-                <form action="" onSubmit={this.submitHandler}>
-                    <input type="text" onChange={this.changeTitleHandler} value={this.state.newDoc.docTitle} />
-                    <input type="text" onChange={this.changeLinkHandler} value={this.state.newDoc.docLink} />
-                    <select onChange={this.changeCategoryHandler}>
-                        <option>Select a category</option>
-                        {this.state.categories.map(function(cat, index){
-                            return <option key={cat}>{cat}</option>;
-                        }, this)}
-                    </select>
-                    <textarea onChange={this.changeDescriptionHandler} value={this.state.newDoc.description}></textarea>
-                    <input type="submit" name="add" value="add" className="submit-btn" />   
-                </form>
-            </div>  
+
+            <AddNewDocumentItem submitHandler={this.submitHandler} 
+            changeTitleHandler={this.changeTitleHandler} 
+            newDoc={this.state.newDoc} 
+            changeCategoryHandler={this.changeCategoryHandler} 
+            categories={this.state.categories}  
+            changeDescriptionHandler={this.changeDescriptionHandler}
+            />
+            
         </div>)
     }
 };
 
-const DocumentItem = (props) => {
-    var doc = props.doc;
-
+const DocumentItem = (props) => {    
     return(
         <li>
-            <a href={doc.docLink}>{doc.docTitle}</a> <CheckBox clickHandler={props.clickHandler} />
-            <DescriptionHolder description={doc.description} />
-            <CategoryList categories={doc.categories} />
+            <a href={props.doc.docLink}>{props.doc.docTitle}</a> <CheckBox id={props.doc.id} clickHandler={props.clickHandler} />
+            <DescriptionHolder description={props.doc.description} />
+            <CategoryList categories={props.doc.categories} />
         </li>
     )
- };
+  
+ }
 
+ 
 const CheckBox = (props) => {
     return(
         <input type="checkbox" onClick={props.clickHandler} />
@@ -250,5 +246,24 @@ const Button = (props) => {
         <button className={props.className} onClick={props.clickHandler}>{props.text}</button> 
     )
 };
+
+const AddNewDocumentItem = (props) => {
+    return (
+    <div>
+        <form action="" onSubmit={props.submitHandler}>
+            <input type="text" onChange={props.changeTitleHandler} value={props.newDoc.docTitle} />
+            <input type="text" onChange={props.changeLinkHandler} value={props.newDoc.docLink} />
+            <select onChange={props.changeCategoryHandler}>
+                <option>Select a category</option>
+                {props.categories.map(function(cat, index){
+                    return <option key={cat}>{cat}</option>;
+                }, this)}
+            </select>
+            <textarea onChange={props.changeDescriptionHandler} value={props.newDoc.description}></textarea>
+            <input type="submit" name="add" value="add" className="submit-btn" />   
+        </form>
+     </div>  
+    )
+}
 
 
