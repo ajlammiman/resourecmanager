@@ -4,6 +4,27 @@ body {
 	/*font-family: monospace;*/
 }
 
+#document_list a, #document_list div
+{
+	display: inline-block;
+	width:20%;
+}
+
+#document_list div
+{
+	width:30%;
+}
+
+#document_list div:first-child
+{
+	width:49%;
+}
+
+#document_list ul li
+{
+	display: inline-block;
+}
+
 footer {
 	display: block;
 	height: 10vh;
