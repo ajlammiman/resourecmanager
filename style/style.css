@@ -1,57 +1,44 @@
 body {
-	margin: 0;
-	padding: 0;
-	/*font-family: monospace;*/
+  margin: 0;
+  padding: 0;
+  /*font-family: monospace;*/
 }
-
-#document_list a, #document_list div
-{
-	display: inline-block;
-	width:20%;
+#document_list a {
+  display: inline-block;
+  width: 20%;
 }
-
-#document_list div
-{
-	width:30%;
+#document_list div {
+  width: 30%;
 }
-
-#document_list div:first-child
-{
-	width:49%;
+#document_list div:first-child {
+  width: 49%;
 }
-
-#document_list ul li
-{
-	display: inline-block;
+#document_list ul li {
+  display: inline-block;
 }
-
 footer {
-	display: block;
-	height: 10vh;
-	overflow: auto;
-	background-color: #f1f1f1;
-	color: #c7254e;
-	font-size: 28px;
-	padding: 20px;
-	box-sizing: border-box;
+  display: block;
+  height: 10vh;
+  overflow: auto;
+  background-color: #f1f1f1;
+  color: #c7254e;
+  font-size: 28px;
+  padding: 20px;
+  box-sizing: border-box;
 }
-
 .container {
-	height: 90vh;
-	display: flex;
-	box-sizing: border-box;
-	
+  height: 90vh;
+  display: flex;
+  box-sizing: border-box;
 }
-
-pre, textarea {
-	width: 50%;
-	margin: 0;
-	padding: 10px;
-	color: #222;
-	overflow: scroll;
+pre,
+textarea {
+  width: 50%;
+  margin: 0;
+  padding: 10px;
+  color: #222;
+  overflow: scroll;
 }
-
-
-textarea:focus { 
-	outline: 0;
+textarea:focus {
+  outline: 0;
 }
