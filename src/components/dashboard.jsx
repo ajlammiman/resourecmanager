@@ -191,7 +191,8 @@ export default class Dashboard extends React.Component {
 
             <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
 
-            <AddNewDocumentItem submitHandler={this.submitHandler} 
+            <AddNewDocumentItem className="document-item" 
+            submitHandler={this.submitHandler} 
             changeTitleHandler={this.changeTitleHandler} 
             newDoc={this.state.newDoc} 
             changeCategoryHandler={this.changeCategoryHandler} 
@@ -249,7 +250,7 @@ const Button = (props) => {
 
 const AddNewDocumentItem = (props) => {
     return (
-    <div>
+    <div className={props.className}>
         <form action="" onSubmit={props.submitHandler}>
             <input type="text" onChange={props.changeTitleHandler} value={props.newDoc.docTitle} />
             <input type="text" onChange={props.changeLinkHandler} value={props.newDoc.docLink} />
