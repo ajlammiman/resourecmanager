@@ -16,6 +16,13 @@ body {
 #document_list ul li {
   display: inline-block;
 }
+.document-item input[type=text] {
+  width: 20%;
+  height: 2em;
+}
+.document-item textarea {
+  width: 20%;
+}
 footer {
   display: block;
   height: 10vh;
