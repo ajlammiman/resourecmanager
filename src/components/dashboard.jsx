@@ -194,6 +194,7 @@ export default class Dashboard extends React.Component {
             <AddNewDocumentItem className="document-item" 
             submitHandler={this.submitHandler} 
             changeTitleHandler={this.changeTitleHandler} 
+            changeLinkHandler={this.changeLinkHandler} 
             newDoc={this.state.newDoc} 
             changeCategoryHandler={this.changeCategoryHandler} 
             categories={this.state.categories}  
@@ -252,14 +253,18 @@ const AddNewDocumentItem = (props) => {
     return (
     <div className={props.className}>
         <form action="" onSubmit={props.submitHandler}>
+            Title
             <input type="text" onChange={props.changeTitleHandler} value={props.newDoc.docTitle} />
+            Link
             <input type="text" onChange={props.changeLinkHandler} value={props.newDoc.docLink} />
+            Category
             <select onChange={props.changeCategoryHandler}>
                 <option>Select a category</option>
                 {props.categories.map(function(cat, index){
                     return <option key={cat}>{cat}</option>;
                 }, this)}
             </select>
+            Description
             <textarea onChange={props.changeDescriptionHandler} value={props.newDoc.description}></textarea>
             <input type="submit" name="add" value="add" className="submit-btn" />   
         </form>

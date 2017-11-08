@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "test" : "jasmine"
   },
   "author": "CodeWithTim",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0"
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "jasmine": "^2.8.0"
   }
 }
