@@ -183,13 +183,7 @@ export default class Dashboard extends React.Component {
         return(
         <div>
             <h2>Document Dashboard</h2>
-            <ul id="document_list">
-                {this.state.docs.map(function(doc, index){
-                    return <DocumentItem doc={doc} key={doc.id} clickHandler={() => this.recordSelected(doc.id)}  />;
-                    }, this)}
-            </ul>
-
-            <Button text="Remove Selected" clickHandler={this.removeSelected} className="remove-btn" />
+            <DocumentList docs={this.state.docs} recordSelected={this.recordSelected} removeSelected={this.removeSelected} />
 
             <AddNewDocumentItem className="document-item" 
             submitHandler={this.submitHandler} 
@@ -204,6 +198,20 @@ export default class Dashboard extends React.Component {
         </div>)
     }
 };
+
+const DocumentList = (props) => {
+    return(
+        <div>
+            <ul id="document_list">
+                {props.docs.map(function(doc, index){
+                    return <DocumentItem doc={doc} key={doc.id} clickHandler={() => props.recordSelected(doc.id)}  />;
+                    }, this)}
+            </ul>
+
+            <Button text="Remove Selected" clickHandler={props.removeSelected} className="remove-btn" />
+        </div>    
+    )
+}
 
 const DocumentItem = (props) => {    
     return(
